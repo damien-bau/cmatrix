@@ -20,7 +20,6 @@ class Matrix {
         Matrix operator/(const double& rhs);
         //Matrix operator^(const double& rhs);
 
-        Matrix& operator=(const Matrix& rhs);
         Matrix operator+(const Matrix& rhs);
         Matrix operator-(const Matrix& rhs);
         Matrix operator*(const Matrix& rhs);
@@ -44,7 +43,6 @@ class Matrix {
         Matrix cross(Matrix, Matrix);
 
     private:
-
         std::vector<std::vector<double>> mat;
         int rows, cols;
 

@@ -1,6 +1,4 @@
 #include "Matrix.h"
-#include <vector>
-
 using std::vector;
 
 // Public
@@ -46,4 +44,54 @@ Matrix& Matrix::operator=(const Matrix& rhs){
     cols = new_cols;
 
     return *this;
+}
+
+Matrix Matrix::operator+(const double& rhs){
+
+
+}
+
+Matrix Matrix::operator-(const double& rhs){
+
+
+}
+
+Matrix Matrix::operator*(const double& rhs){
+
+
+}
+
+Matrix Matrix::operator/(const double& rhs){
+
+
+}
+
+Matrix Matrix::operator+(const Matrix& rhs){
+
+
+}
+
+Matrix Matrix::operator-(const Matrix& rhs){
+
+
+}
+
+Matrix Matrix::operator*(const Matrix& rhs){
+
+
+}
+
+Matrix& Matrix::operator+=(const Matrix& rhs){
+
+
+}
+
+Matrix& Matrix::operator-=(const Matrix& rhs){
+
+
+}
+
+Matrix& Matrix::operator*=(const Matrix& rhs){
+
+
 }
