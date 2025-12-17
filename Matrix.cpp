@@ -1,5 +1,4 @@
 #include "Matrix.h"
-using std::vector;
 
 // Public
 
@@ -35,7 +34,7 @@ Matrix& Matrix::operator=(const Matrix& rhs){
     }
 
     for (int i=0; i<new_rows; i++){
-        for (int j=0; j< new_cols; j++){
+        for (int j=0; j<new_cols; j++){
             mat[i][j] = rhs(i,j);
         }
     }
@@ -48,50 +47,130 @@ Matrix& Matrix::operator=(const Matrix& rhs){
 
 Matrix Matrix::operator+(const double& rhs){
 
+    Matrix output(rows,cols,0.);
+
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[i][j] + rhs;
+        }
+    }
+
+    return output;
 
 }
 
 Matrix Matrix::operator-(const double& rhs){
 
+    Matrix output(rows,cols,0.);
+
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[i][j] - rhs;
+        }
+    }
+
+    return output;
 
 }
 
 Matrix Matrix::operator*(const double& rhs){
 
+    Matrix output(rows,cols,0.);
 
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[i][j] * rhs;
+        }
+    }
+
+    return output;
 }
 
 Matrix Matrix::operator/(const double& rhs){
 
+    Matrix output(rows,cols,0.);
 
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[i][j] / rhs;
+        }
+    }
+
+    return output;
 }
 
 Matrix Matrix::operator+(const Matrix& rhs){
 
+    Matrix output(rows,cols,0.);
 
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[i][j] + rhs(i,j);
+        }
+    }
+
+    return output;
 }
 
 Matrix Matrix::operator-(const Matrix& rhs){
 
+    Matrix output(rows,cols,0.);
 
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[i][j] - rhs(i,j);
+        }
+    }
+
+    return output;
 }
 
 Matrix Matrix::operator*(const Matrix& rhs){
-
 
 }
 
 Matrix& Matrix::operator+=(const Matrix& rhs){
 
+    Matrix output(rows,cols,0.);
 
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            this->mat[i][j] += rhs(i,j);
+        }
+    }
+
+    return output;
 }
 
 Matrix& Matrix::operator-=(const Matrix& rhs){
 
+    Matrix output(rows,cols,0.);
 
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            this->mat[i][j] -= rhs(i,j);
+        }
+    }
+
+    return output;
 }
 
 Matrix& Matrix::operator*=(const Matrix& rhs){
 
+}
 
+double& Matrix::operator()(const int& row, const int& col){
+    return this->mat[row][col];
+}
+
+const double& Matrix::operator()(const int&row, const int& col) const{
+    return this->mat[row][col];
+}
+
+int Matrix::get_rows() const {
+    return this->rows;
+}
+
+int Matrix::get_cols() const {
+    return this->cols;
 }

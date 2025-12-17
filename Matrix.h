@@ -29,8 +29,8 @@ class Matrix {
 
         std::vector<double> operator*(const std::vector<double>& rhs);
 
-        double operator()(const int& row, int& col);
-        const double operator()(const int& row, const int&col) const;
+        double& operator()(const int& row, const int& col);
+        const double& operator()(const int& row, const int&col) const;
 
 
         // Member functions
@@ -39,8 +39,6 @@ class Matrix {
         Matrix transpose();
         Matrix inverse();
         Matrix identity(int);
-        Matrix dot(Matrix, Matrix);
-        Matrix cross(Matrix, Matrix);
 
     private:
         std::vector<std::vector<double>> mat;
