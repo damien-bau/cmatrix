@@ -36,9 +36,10 @@ class Matrix {
         // Member functions
         int get_rows() const;
         int get_cols() const;
+        double determinant();
         Matrix transpose();
         Matrix inverse();
-        Matrix identity(int);
+        Matrix identity(const int size);
 
     private:
         std::vector<std::vector<double>> mat;
