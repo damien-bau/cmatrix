@@ -1,36 +1,48 @@
 #pragma once
 
+#include<vector>
+
 
 class Matrix {
 
     public:
-        Matrix(int, int);
+        Matrix(int _rows, int _cols, double _initval);
 
         // Operator overloads
-        Matrix& operator = (const Matrix&);
-        friend Matrix operator + (const Matrix&, const Matrix&);
-        friend Matrix operator - (const Matrix&, const Matrix&);
-        friend Matrix operator * (const Matrix&, const Matrix&);
-        friend Matrix operator * (double, const Matrix&);
-        friend Matrix operator * (const Matrix&, double);
-        friend Matrix operator / (const Matrix&, double);
-        Matrix& operator += (const Matrix&);
-        Matrix& operator -= (const Matrix&);
-        Matrix& operator *= (const Matrix&);
-        Matrix& operator *= (double);
-        Matrix& operator /= (double);
-        Matrix& operator ^ (int);
+        Matrix operator+(const double& rhs);
+        Matrix operator-(const double& rhs);
+        Matrix operator*(const double& rhs);
+        Matrix operator/(const double& rhs);
+        //Matrix operator^(const double& rhs);
+        Matrix& operator/=(const double& rhs);
+
+        Matrix& operator=(const Matrix& rhs);
+        Matrix operator+(const Matrix& rhs);
+        Matrix operator-(const Matrix& rhs);
+        Matrix operator*(const Matrix& rhs);
+        Matrix& operator+=(const Matrix& rhs);
+        Matrix& operator-=(const Matrix& rhs);
+        Matrix& operator*=(const Matrix& rhs);
+
+        std::vector<double> operator*(const std::vector<double>& rhs);
+
+        double operator()(const int& row, int& col);
+        const double operator()(const int& row, const int&col) const;
+        // define operator to use variable[x][y] to access Matrix values
 
 
         // Member functions
+        int get_rows() const;
+        int get_cols() const;
         Matrix transpose();
         Matrix inverse();
         Matrix identity(int);
-        Matrix dotproduct(Matrix, Matrix);
-        Matrix crossproduct(Matrix, Matrix);
+        Matrix dot(Matrix, Matrix);
+        Matrix cross(Matrix, Matrix);
 
     private:
-        int rows, cols;
 
+        std::vector<std::vector<double>> mat;
+        int rows, cols;
 
 };
