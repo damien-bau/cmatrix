@@ -1,7 +1,7 @@
 #include "Matrix.h"
 
-// Public
 
+// Constructor
 Matrix::Matrix(int _rows, int _cols, const double _initval = 0.){
 
     mat.resize(_rows);
@@ -13,6 +13,7 @@ Matrix::Matrix(int _rows, int _cols, const double _initval = 0.){
     cols = _cols;
 }
 
+// Copy constructor
 Matrix::Matrix(const Matrix& rhs){
 
         mat = rhs.mat;
@@ -21,8 +22,10 @@ Matrix::Matrix(const Matrix& rhs){
 
 }
 
+// Destructor
 Matrix::~Matrix(){}
 
+// Assignment operator
 Matrix& Matrix::operator=(const Matrix& rhs){
 
     int new_rows = rhs.get_rows();
@@ -45,6 +48,7 @@ Matrix& Matrix::operator=(const Matrix& rhs){
     return *this;
 }
 
+// Scalar addition: matrix + constant
 Matrix Matrix::operator+(const double& rhs){
 
     Matrix output(rows,cols,0.);
@@ -59,6 +63,7 @@ Matrix Matrix::operator+(const double& rhs){
 
 }
 
+// Scalar subtraction: matrix - constant
 Matrix Matrix::operator-(const double& rhs){
 
     Matrix output(rows,cols,0.);
@@ -73,6 +78,7 @@ Matrix Matrix::operator-(const double& rhs){
 
 }
 
+// Scalar multiplication: matrix * constant
 Matrix Matrix::operator*(const double& rhs){
 
     Matrix output(rows,cols,0.);
@@ -86,6 +92,7 @@ Matrix Matrix::operator*(const double& rhs){
     return output;
 }
 
+// Scalar division: matrix / constant
 Matrix Matrix::operator/(const double& rhs){
 
     Matrix output(rows,cols,0.);
@@ -99,8 +106,11 @@ Matrix Matrix::operator/(const double& rhs){
     return output;
 }
 
+// Matrix addition: matrix + matrix
 Matrix Matrix::operator+(const Matrix& rhs){
 
+    // Raise error if sizes don't match
+    
     Matrix output(rows,cols,0.);
 
     for (int i=0; i<rows; i++){
@@ -113,6 +123,8 @@ Matrix Matrix::operator+(const Matrix& rhs){
 }
 
 Matrix Matrix::operator-(const Matrix& rhs){
+
+    // Raise error if sizes don't match
 
     Matrix output(rows,cols,0.);
 
@@ -127,11 +139,32 @@ Matrix Matrix::operator-(const Matrix& rhs){
 
 Matrix Matrix::operator*(const Matrix& rhs){
 
+    // Raise error if sizes aren't compatible
+
+    int rows = this->rows;
+    int cols = rhs.get_cols();
+    int n = rhs.get_rows();
+    Matrix output(rows,cols,0.);
+
+
+    for (int i=0; i<rows; i++){
+        for (int k=0; k<cols; k++){
+            for (int j=0; j<n; j++){
+                output(i,j) += this->mat[i][k]*rhs(k,j);
+            }
+        }
+    }
+
+    return output;
+
 }
 
 Matrix& Matrix::operator+=(const Matrix& rhs){
 
-    Matrix output(rows,cols,0.);
+    // Raise error if sizes don't match
+
+    int rows = rhs.get_rows();
+    int cols = rhs.get_cols();
 
     for (int i=0; i<rows; i++){
         for (int j=0; j<cols; j++){
@@ -139,12 +172,15 @@ Matrix& Matrix::operator+=(const Matrix& rhs){
         }
     }
 
-    return output;
+    return *this;
 }
 
 Matrix& Matrix::operator-=(const Matrix& rhs){
 
-    Matrix output(rows,cols,0.);
+    // Raise error if sizes don't match
+
+    int rows = rhs.get_rows();
+    int cols = rhs.get_cols();
 
     for (int i=0; i<rows; i++){
         for (int j=0; j<cols; j++){
@@ -152,11 +188,17 @@ Matrix& Matrix::operator-=(const Matrix& rhs){
         }
     }
 
-    return output;
+    return *this;
 }
 
 Matrix& Matrix::operator*=(const Matrix& rhs){
 
+    // Raise error if sizes aren't compatible
+    Matrix output = (*this) * rhs;
+
+    (*this) = output;
+    return *this;
+    
 }
 
 std::vector<double> Matrix::operator*(const std::vector<double>& rhs){
@@ -165,7 +207,7 @@ std::vector<double> Matrix::operator*(const std::vector<double>& rhs){
 
     for (int i=0; i<rows; i++){
         for (int j=0; j<cols; j++){
-            output[i] = this->mat[i][j] * rhs[j];
+            output[i] += this->mat[i][j] * rhs[j];
         }
     }
 
@@ -173,10 +215,12 @@ std::vector<double> Matrix::operator*(const std::vector<double>& rhs){
 }
 
 double& Matrix::operator()(const int& row, const int& col){
+    // Raise error if index out of range
     return this->mat[row][col];
 }
 
 const double& Matrix::operator()(const int&row, const int& col) const{
+    // Raise error if index out of range
     return this->mat[row][col];
 }
 

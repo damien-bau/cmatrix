@@ -13,13 +13,18 @@ class Matrix {
         
         Matrix& operator=(const Matrix& rhs);
 
-        // Operator overloads
+        // Scalar operators
         Matrix operator+(const double& rhs);
         Matrix operator-(const double& rhs);
         Matrix operator*(const double& rhs);
         Matrix operator/(const double& rhs);
+        Matrix& operator+=(const double& rhs);
+        Matrix& operator-=(const double& rhs);
+        Matrix& operator*=(const double& rhs);
+        Matrix& operator/=(const double& rhs);
         //Matrix operator^(const double& rhs);
 
+        // Matrix operators
         Matrix operator+(const Matrix& rhs);
         Matrix operator-(const Matrix& rhs);
         Matrix operator*(const Matrix& rhs);
