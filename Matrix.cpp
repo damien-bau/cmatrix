@@ -148,8 +148,8 @@ Matrix Matrix::operator*(const Matrix& rhs){
 
 
     for (int i=0; i<rows; i++){
-        for (int k=0; k<cols; k++){
-            for (int j=0; j<n; j++){
+        for (int k=0; k<n; k++){
+            for (int j=0; j<cols; j++){
                 output(i,j) += this->mat[i][k]*rhs(k,j);
             }
         }
@@ -237,6 +237,18 @@ double Matrix::determinant(){
 }
 
 Matrix Matrix::transpose(){
+ 
+    int rows = this->cols;
+    int cols = this->rows;
+    Matrix output(rows,cols,0.);
+
+    for (int i=0; i<rows; i++){
+        for (int j=0; j<cols; j++){
+            output(i,j) = this->mat[j][i];
+        }
+    }
+
+    return output;
 
 }
 
