@@ -1,4 +1,6 @@
 #include "Matrix.h"
+#include <stdexcept>
+#include <cmath>
 
 
 // Constructor
@@ -233,6 +235,10 @@ int Matrix::get_cols() const {
 }
 
 double Matrix::determinant(){
+
+    if (this->rows != this->cols){
+        throw std::runtime_error("determinant() requires a square matrix");
+    }
     
 }
 
@@ -254,6 +260,35 @@ Matrix Matrix::transpose(){
 
 Matrix Matrix::inverse(){
 // Only exists for square matrices with det != 0
+    
+    if (this->rows != this->cols){
+        throw std::runtime_error("inverse() requires a square matrix");
+    }
+
+    if (std::abs(determinant()) < 1e-10){
+        throw std::runtime_error("inverse() requires a non-singular matrix");
+    }
+
+    int n = this->rows;
+
+    // Gauss-Jordan elimination
+    Matrix augmented(n,2*n);
+    for (int i=0; i<n; i++){
+        for (int j=0; j<n; j++){
+            augmented(i,j) = this->mat[i][j];
+        }
+        augmented(i,i+n) = 1.;
+    }
+
+    int i=0;
+    int j=0;
+
+    bool pivot = false;
+    //implement pivot finding here for stability of algorithm
+
+    if (pivot){
+
+    }
 
 }
 
