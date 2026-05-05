@@ -234,12 +234,87 @@ int Matrix::get_cols() const {
     return this->cols;
 }
 
+std::vector<double>& Matrix::get_row(const int& row){
+    // Raise error if index out of range
+    if (row < 0 || row >= this->rows){
+        throw std::out_of_range("Row index out of range");
+    }
+    return this->mat[row];
+}
+
+const std::vector<double>& Matrix::get_row(const int& row) const{
+    // Raise error if index out of range
+    if (row < 0 || row >= this->rows){
+        throw std::out_of_range("Row index out of range");
+    }
+    return this->mat[row];
+}
+
 double Matrix::determinant(){
+/*
+Calculates the determinant of the matrix using LU decomposition.
+Only exists for square matrices.
+*/
 
     if (this->rows != this->cols){
         throw std::runtime_error("determinant() requires a square matrix");
     }
+
+    int n = this->rows;
     
+    // Create a copy of the matrix for LU decomposition
+    Matrix lu = *this;
+    
+    int swaps = 0;  // Track row swaps for sign of determinant
+    
+    // Perform LU decomposition with partial pivoting
+    for (int i = 0; i < n; i++){
+        
+        // Find pivot (row with largest absolute value in column i)
+        int max_row = i;
+        double max_val = std::abs(lu(i, i));
+        
+        for (int k = i + 1; k < n; k++){
+            if (std::abs(lu(k, i)) > max_val){
+                max_val = std::abs(lu(k, i));
+                max_row = k;
+            }
+        }
+        
+        // Check for singular matrix
+        if (std::abs(lu(max_row, i)) < 1e-15){
+            return 0.0;
+        }
+        
+        // Swap rows if needed
+        if (max_row != i){
+            std::swap(lu.get_row(i), lu.get_row(max_row));
+            swaps++;
+        }
+        
+        // Eliminate column i below the diagonal
+        for (int k = i + 1; k < n; k++){
+            double factor = lu(k, i) / lu(i, i);
+            for (int j = i; j < n; j++){
+                lu(k, j) -= factor * lu(i, j);
+            }
+        }
+    }
+    
+    // Calculate determinant as product of diagonal elements
+    // adjusted by the sign from row swaps
+    double det;
+    if (swaps % 2 == 0){
+        det = 1.0;
+    } else {
+        det = -1.0;
+    }
+    
+    for (int i = 0; i < n; i++){
+        det *= lu(i, i);
+    }
+
+    return det;
 }
 
 Matrix Matrix::transpose(){

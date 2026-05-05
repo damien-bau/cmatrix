@@ -41,6 +41,8 @@ class Matrix {
         // Member functions
         int get_rows() const;
         int get_cols() const;
+        std::vector<double>& get_row(const int& row);
+        const std::vector<double>& get_row(const int& row) const;
         double determinant();
         Matrix transpose();
         Matrix inverse();
